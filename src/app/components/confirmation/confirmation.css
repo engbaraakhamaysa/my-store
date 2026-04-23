@@ -1,0 +1,31 @@
+.confirmation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8%;
+}
+
+.confirmation-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.confirmation-header {
+  color: #33e5bc;
+}
+
+.home-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #33b5e5;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #2a9cc9;
+}

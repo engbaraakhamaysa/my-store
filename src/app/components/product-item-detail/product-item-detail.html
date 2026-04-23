@@ -1,0 +1,25 @@
+<div class="detail-container" *ngIf="product$ | async as product; else loading">
+  <img [src]="product.url" />
+
+  <div class="detail-item">
+    <h2>{{ product.name }}</h2>
+    <p>{{ product.price }} $</p>
+    <p>{{ product.description }}</p>
+
+    <div class="container">
+      <select class="select-input" [(ngModel)]="quantity">
+        <option *ngFor="let q of [1, 2, 3, 4, 5, 6, 7, 8, 9]" [value]="q">
+          {{ q }}
+        </option>
+      </select>
+
+      <button class="add-btn" (click)="addToCart(product)">Add to Cart</button>
+    </div>
+
+    <a class="back-link" routerLink="/">← Back to Products</a>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading product...</p>
+</ng-template>
