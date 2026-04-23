@@ -46,7 +46,6 @@ h2 {
   color: #33b5e5;
 }
 
-/* Form */
 .form-margin {
   margin-bottom: 12px;
 }
@@ -60,7 +59,6 @@ input {
   box-sizing: border-box;
 }
 
-/* Submit button */
 button {
   width: 100%;
   padding: 10px;
@@ -76,7 +74,6 @@ button:hover {
   background-color: #2a9cc9;
 }
 
-/* Remove button (important UX fix) */
 .cart-item button {
   width: auto;
   padding: 6px 12px;

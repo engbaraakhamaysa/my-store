@@ -18,6 +18,7 @@ export class Cart implements OnInit {
   name: string = '';
   address: string = '';
   cardNumber: string = '';
+
   nameError: string = '';
   addressError: string = '';
   cardError: string = '';
@@ -26,6 +27,14 @@ export class Cart implements OnInit {
     private cartService: CartService,
     private router: Router,
   ) {}
+
+  ngOnInit() {
+    this.cartItems = this.cartService.getCart();
+  }
+
+  getTotal() {
+    return this.cartService.getTotal();
+  }
 
   validateName(value: string) {
     if (!value) {
@@ -48,21 +57,17 @@ export class Cart implements OnInit {
   }
 
   validateCard(value: string) {
+    const onlyNumbers = /^[0-9]+$/;
+
     if (!value) {
       this.cardError = 'Card number is required';
+    } else if (!onlyNumbers.test(value)) {
+      this.cardError = 'Card number must contain only numbers';
     } else if (value.length < 5) {
       this.cardError = 'Card number must be at least 5 digits';
     } else {
       this.cardError = '';
     }
-  }
-
-  ngOnInit() {
-    this.cartItems = this.cartService.getCart();
-  }
-
-  getTotal() {
-    return this.cartService.getTotal();
   }
 
   submitOrder() {
@@ -82,5 +87,6 @@ export class Cart implements OnInit {
   remove(id: number) {
     this.cartService.removeFromCart(id);
     this.cartItems = this.cartService.getCart();
+    alert('Product removed from cart ❌');
   }
 }
