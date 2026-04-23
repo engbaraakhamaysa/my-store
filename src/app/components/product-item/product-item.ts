@@ -1,19 +1,23 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { CartService } from '../../services/cartService.js';
+import { CartService } from '../../services/cartService';
 import { FormsModule } from '@angular/forms';
-import { Product } from '../../models/product.model.js';
+import { Product } from '../../models/product.model';
+
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-product-item',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './product-item.html',
-  styleUrl: './product-item.css',
+  styleUrls: ['./product-item.css'],
 })
 export class ProductItem {
-  @Input() product: any;
+  @Output() notify = new EventEmitter<string>();
+
+  @Input() product!: Product;
 
   quantity: number = 1;
 
@@ -24,7 +28,9 @@ export class ProductItem {
 
   addToCart() {
     this.cartService.addToCart(this.product, this.quantity);
-    alert('The product has been added to the cart ✅');
+
+    this.notify.emit(this.product.name);
+
     this.quantity = 1;
   }
 

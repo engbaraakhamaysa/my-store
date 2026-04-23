@@ -1,4 +1,4 @@
-<div class="detail-container" *ngIf="product$ | async as product; else loading">
+<div class="detail-container" *ngIf="product$ | async as product">
   <img [src]="product.url" />
 
   <div class="detail-item">
@@ -19,7 +19,3 @@
     <a class="back-link" routerLink="/">← Back to Products</a>
   </div>
 </div>
-
-<ng-template #loading>
-  <p>Loading product...</p>
-</ng-template>

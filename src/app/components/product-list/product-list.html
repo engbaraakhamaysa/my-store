@@ -1,10 +1,18 @@
+<!-- Toast Message -->
+<div *ngIf="message" class="toast">
+  {{ message }}
+</div>
+
 <div class="product-container">
   <ng-container *ngIf="products$ | async as products">
-    <p *ngIf="products.length === 0">No products found</p>
-
     <div *ngIf="products.length > 0">
       <div class="product-index">
-        <app-product-item *ngFor="let product of products" [product]="product"> </app-product-item>
+        <app-product-item
+          *ngFor="let product of products"
+          [product]="product"
+          (notify)="showMessage($event)"
+        >
+        </app-product-item>
       </div>
     </div>
   </ng-container>

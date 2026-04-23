@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/productService';
 import { Product } from '../../models/product.model';
 import { ProductItem } from '../product-item/product-item';
@@ -10,13 +10,20 @@ import { Observable } from 'rxjs';
   standalone: true,
   imports: [CommonModule, ProductItem],
   templateUrl: './product-list.html',
-  styleUrl: './product-list.css',
+  styleUrls: ['./product-list.css'],
 })
-export class ProductList {
-  products$: Observable<Product[]>;
+export class ProductList implements OnInit {
+  products$!: Observable<Product[]>;
 
-  constructor(private productService: ProductService) {
-    //Get All Product
+  message: string = '';
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit() {
     this.products$ = this.productService.getProducts();
+  }
+
+  showMessage(productName: string) {
+    alert(`Product added: ${productName} ✅`);
   }
 }

@@ -5,11 +5,11 @@ import { Product } from '../models/product.model';
   providedIn: 'root',
 })
 export class CartService {
-  cart: { product: Product; quantity: number }[] = [];
+  private cart: { product: Product; quantity: number }[] = [];
 
   constructor() {}
 
-  //Add Product To Cart
+  // Add Product To Cart
   addToCart(product: Product, quantity: number = 1) {
     quantity = Number(quantity);
 
@@ -20,17 +20,23 @@ export class CartService {
     } else {
       this.cart.push({ product, quantity });
     }
-
-    console.log('Cart:', this.cart);
   }
 
-  //Get All Produt on the Cart
+  // Get All Products in Cart
   getCart() {
-    return this.cart;
+    return [...this.cart];
   }
 
-  //Get Totoal Products
+  // Get Total Price
   getTotal() {
     return this.cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  }
+
+  clearCart() {
+    this.cart = [];
+  }
+  //Remove Product
+  removeFromCart(productId: number) {
+    this.cart = this.cart.filter((item) => item.product.id !== productId);
   }
 }

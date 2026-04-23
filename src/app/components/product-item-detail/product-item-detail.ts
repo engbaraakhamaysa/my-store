@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/productService';
 import { CartService } from '../../services/cartService';
-import { Observable, switchMap, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -12,10 +12,12 @@ import { Product } from '../../models/product.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './product-item-detail.html',
-  styleUrl: './product-item-detail.css',
+  styleUrls: ['./product-item-detail.css'],
 })
 export class ProductItemDetail {
   quantity: number = 1;
+
+  //Observable that holds the product details
 
   product$: Observable<Product | undefined>;
 
@@ -24,20 +26,17 @@ export class ProductItemDetail {
     private productService: ProductService,
     private cartService: CartService,
   ) {
-    this.product$ = this.route.params.pipe(
-      switchMap((params) => {
-        const id = Number(params['id']);
+    //Get Product ID from route and load product details
 
-        return this.productService
-          .getProducts()
-          .pipe(map((products) => products.find((p) => p.id === id)));
-      }),
-    );
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.product$ = this.productService.getProductById(id);
   }
 
-  //Add Product To Cart
   addToCart(product: Product) {
     this.cartService.addToCart(product, this.quantity);
+    alert('The product has been added to the cart ✅');
+
     this.quantity = 1;
   }
 }
