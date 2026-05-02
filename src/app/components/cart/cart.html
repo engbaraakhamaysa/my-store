@@ -1,5 +1,4 @@
 <div class="cart-container">
-  <!-- CART ITEMS -->
   <div class="cart-panel">
     <h1>My Cart 🛒</h1>
 
@@ -18,12 +17,10 @@
     <h2>Total: {{ getTotal() }} $</h2>
   </div>
 
-  <!-- CHECKOUT -->
   <div class="cart-panel">
     <h1>Checkout 🧾</h1>
 
     <form (ngSubmit)="submitOrder()" #form="ngForm">
-      <!-- NAME -->
       <div class="form-margin">
         <label>Full name:</label>
         <input
@@ -38,7 +35,6 @@
         <p class="error" *ngIf="nameError">{{ nameError }}</p>
       </div>
 
-      <!-- ADDRESS -->
       <div class="form-margin">
         <label>Address:</label>
         <input
@@ -53,7 +49,6 @@
         <p class="error" *ngIf="addressError">{{ addressError }}</p>
       </div>
 
-      <!-- CARD -->
       <div class="form-margin">
         <label>Credit card number:</label>
         <input
