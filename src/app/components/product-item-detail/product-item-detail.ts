@@ -6,6 +6,7 @@ import { ProductService } from '../../services/productService';
 import { CartService } from '../../services/cartService';
 import { Observable } from 'rxjs';
 import { Product } from '../../models/product.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-item-detail',
@@ -16,26 +17,23 @@ import { Product } from '../../models/product.model';
 })
 export class ProductItemDetail {
   quantity: number = 1;
-
-  //Observable that holds the product details
-
   product$: Observable<Product | undefined>;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
+    private toastr: ToastrService,
   ) {
     //Get Product ID from route and load product details
-
     const id = Number(this.route.snapshot.paramMap.get('id'));
-
     this.product$ = this.productService.getProductById(id);
   }
 
+  //Ad Product To Cart & Massege Success Toaster
   addToCart(product: Product) {
     this.cartService.addToCart(product, this.quantity);
-    alert('The product has been added to the cart ✅');
+    this.toastr.success(`Product added`, 'Success');
 
     this.quantity = 1;
   }

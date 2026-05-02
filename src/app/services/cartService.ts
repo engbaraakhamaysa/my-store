@@ -29,9 +29,10 @@ export class CartService {
 
   // Get Total Price
   getTotal() {
-    return this.cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+    return this.cart
+      .reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0)
+      .toFixed(2);
   }
-
   clearCart() {
     this.cart = [];
   }

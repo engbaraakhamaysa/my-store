@@ -26,6 +26,7 @@ export class ProductItem {
     private router: Router,
   ) {}
 
+  //Add To Cart Home Page
   addToCart() {
     this.cartService.addToCart(this.product, this.quantity);
 
@@ -34,6 +35,7 @@ export class ProductItem {
     this.quantity = 1;
   }
 
+  //Navigater to Product Detail
   goToDetails() {
     this.router.navigate(['/product', this.product.id]);
   }

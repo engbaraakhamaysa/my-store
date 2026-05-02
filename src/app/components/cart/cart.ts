@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cartService';
 import { Product } from '../../models/product.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -13,11 +14,15 @@ import { Product } from '../../models/product.model';
   styleUrls: ['./cart.css'],
 })
 export class Cart implements OnInit {
+  // items in the cart (product + quantity)
   cartItems: { product: Product; quantity: number }[] = [];
 
+  // form inputs
   name: string = '';
   address: string = '';
   cardNumber: string = '';
+
+  // error messages for validation
   nameError: string = '';
   addressError: string = '';
   cardError: string = '';
@@ -25,8 +30,10 @@ export class Cart implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
+    private toastr: ToastrService,
   ) {}
 
+  // validate user name input
   validateName(value: string) {
     if (!value) {
       this.nameError = 'Name is required';
@@ -37,6 +44,7 @@ export class Cart implements OnInit {
     }
   }
 
+  // validate address input
   validateAddress(value: string) {
     if (!value) {
       this.addressError = 'Address is required';
@@ -47,6 +55,7 @@ export class Cart implements OnInit {
     }
   }
 
+  // validate card number input
   validateCard(value: string) {
     if (!value) {
       this.cardError = 'Card number is required';
@@ -57,15 +66,23 @@ export class Cart implements OnInit {
     }
   }
 
+  // load cart items when component starts
   ngOnInit() {
     this.cartItems = this.cartService.getCart();
   }
 
+  // calculate total price of cart
   getTotal() {
     return this.cartService.getTotal();
   }
 
+  // submit order and navigate to confirmation page
   submitOrder() {
+    if (this.cartItems.length === 0) {
+      this.toastr.error('Cart is empty', 'Error');
+      return;
+    }
+
     const total = this.getTotal();
 
     this.cartService.clearCart();
@@ -79,8 +96,11 @@ export class Cart implements OnInit {
     });
   }
 
+  // remove product from cart
   remove(id: number) {
     this.cartService.removeFromCart(id);
     this.cartItems = this.cartService.getCart();
+
+    this.toastr.error('Product removed from cart', 'Removed');
   }
 }

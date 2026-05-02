@@ -4,6 +4,7 @@ import { ProductService } from '../../services/productService';
 import { Product } from '../../models/product.model';
 import { ProductItem } from '../product-item/product-item';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-list',
@@ -15,15 +16,17 @@ import { Observable } from 'rxjs';
 export class ProductList implements OnInit {
   products$!: Observable<Product[]>;
 
-  message: string = '';
+  constructor(
+    private productService: ProductService,
+    private toastr: ToastrService,
+  ) {}
 
-  constructor(private productService: ProductService) {}
-
+  // Get All Prudcts using  Observable
   ngOnInit() {
     this.products$ = this.productService.getProducts();
   }
-
+  //Tester Massege
   showMessage(productName: string) {
-    alert(`Product added: ${productName} ✅`);
+    this.toastr.success(`Product added: ${productName}`, 'Success');
   }
 }
